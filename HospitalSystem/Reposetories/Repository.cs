@@ -1,5 +1,5 @@
 ﻿
-using HospitalSystem.Data;
+using HospitalManagementSystem.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Linq.Expressions;
