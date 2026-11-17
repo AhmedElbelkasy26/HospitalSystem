@@ -1,5 +1,6 @@
+
 using Microsoft.EntityFrameworkCore;
-using HospitalManagementSystem.Data; // تأكد إن ده نفس الـ Namespace بتاع مشروعك
+using HospitalManagementSystem.Data;
 using Ecommerce533.Reposetories;
 using HospitalSystem.Reposetories;
 
@@ -11,25 +12,35 @@ namespace HospitalSystem
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            // Database
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(
+                    builder.Configuration.GetConnectionString("DefaultConnection")));
 
+            // Repository Pattern
+            builder.Services.AddScoped(
+                typeof(IRepository<>), typeof(Repository<>));
 
-            builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-
+            // Unit Of Work
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-
-            // 2. إضافة الخدمات الأساسية
-            builder.Services.AddControllers();
-            builder.Services.AddEndpointsApiExplorer();
+            // MVC
+            builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
 
-            // إعدادات الـ Pipeline
+            // Middleware
             app.UseHttpsRedirection();
+            app.UseStaticFiles();
+
+            app.UseRouting();
+
             app.UseAuthorization();
-            app.MapControllers();
+
+            // Default Route
+            app.MapControllerRoute(
+                name: "default",
+                pattern: "{controller=Appointments}/{action=Index}/{id?}");
 
             app.Run();
         }
