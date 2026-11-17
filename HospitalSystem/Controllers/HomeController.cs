@@ -1,20 +1,42 @@
-
+﻿using HospitalManagementSystem.Data;
+using HospitalManagementSystem.Models;
+using HospitalSystem.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
+using Microsoft.EntityFrameworkCore;
 
 namespace HospitalSystem.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private readonly ApplicationDbContext _context;
+        public HomeController(ApplicationDbContext context)
         {
-            return View();
+            _context = context;
         }
 
-        public IActionResult Privacy()
+        public async Task<IActionResult> Index()
         {
-            return View();
-        }
+            var today = DateTime.Today;
 
+            var model = new DashboardViewModel
+            {
+               
+                PatientsToday = await _context.Appointments
+                    .Where(a => a.date.Date == today).CountAsync(),
+
+                AppointmentsToday = await _context.Appointments
+                    .Where(a => a.date.Date == today).CountAsync(),
+
+                TodaysAppointments = await _context.Appointments
+                    .Include(a => a.Patient)
+                    .Include(a => a.Doctor)
+                    .ThenInclude(d => d.Department)
+                    .Where(a => a.date.Date == today)
+                    .OrderBy(a => a.time)
+                    .ToListAsync()
+            };
+
+            return View(model);
+        }
     }
 }
