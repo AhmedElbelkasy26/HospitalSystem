@@ -1,0 +1,67 @@
+@model PrescriptionDetailsVM
+@{
+    var p = Model.Header;
+    ViewData["Title"] = $"Prescription #{p.id}";
+}
+
+<header class="page-header">
+    <h1>Prescription #@p.id</h1>
+    <p class="subtitle">Prescription header + details</p>
+</header>
+
+<section class="info-cards">
+    <div class="info-card">
+        <span class="label">Patient</span>
+        <span class="value">@p.Patient.name</span>
+    </div>
+    <div class="info-card">
+        <span class="label">Doctor</span>
+        <span class="value">@p.Doctor.name</span>
+    </div>
+    <div class="info-card">
+        <span class="label">Date</span>
+        <span class="value">@p.date.ToString("dd MMM yyyy")</span>
+    </div>
+</section>
+
+<section class="items">
+    <div class="items-header">
+        <span class="items-title">Prescription items</span>
+        <a asp-action="AddMedicine" asp-route-id="@p.id" class="btn-primary">+ Add Medicine</a>
+    </div>
+
+    <div class="table-card">
+        <table>
+            <thead>
+                <tr>
+                    <th>Medicine</th>
+                    <th>Dose</th>
+                    <th>Duration</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Items)
+                {
+                    <tr>
+                        <td>@item.medicine</td>
+                        <td>@item.dose</td>
+                        <td>@item.duration</td>
+                        <td>
+                            <form asp-action="RemoveMedicine" asp-route-id="@p.id" asp-route-itemId="@item.id" method="post">
+                                <button type="submit" class="link-action">Remove</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+
+                @if (Model.Items.Count == 0)
+                {
+                    <tr>
+                        <td colspan="4" class="empty">No medicines yet.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</section>
