@@ -1,5 +1,5 @@
 using Ecommerce533.Reposetories;
-using HospitalManagementSystem.Data; // تأكد إن ده نفس الـ Namespace بتاع مشروعك
+using HospitalSystem.Data;
 using HospitalSystem.Reposetories;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,12 +11,16 @@ namespace HospitalSystem
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            // Database
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(
+                    builder.Configuration.GetConnectionString("DefaultConnection")));
 
+            // Repository Pattern
+            builder.Services.AddScoped(
+                typeof(IRepository<>), typeof(Repository<>));
 
-            builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-
+            // Unit Of Work
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 
@@ -24,19 +28,26 @@ namespace HospitalSystem
             builder.Services.AddControllersWithViews();
 
             builder.Services.AddControllers();
+            builder.Services.AddControllersWithViews();
+            builder.Services.AddEndpointsApiExplorer();
 
             var app = builder.Build();
 
-            // إعدادات الـ Pipeline
+            // Middleware
             app.UseHttpsRedirection();
-            app.UseAuthorization();
-            app.MapControllers();
-
-            app.MapControllerRoute(
-             name: "default",
-            pattern: "{controller=Patient}/{action=Index}/{id?}");
-
             app.UseStaticFiles();
+            app.UseRouting();
+            app.UseAuthorization();
+            app.MapControllerRoute(
+                name: "default",
+                pattern: "{controller=Home}/{action=Index}/{id?}");
+
+
+            app.MapStaticAssets();
+            app.MapControllerRoute(
+                name: "default",
+                pattern: "{controller=Home}/{action=Index}/{id?}")
+                .WithStaticAssets();
             app.Run();
         }
     }

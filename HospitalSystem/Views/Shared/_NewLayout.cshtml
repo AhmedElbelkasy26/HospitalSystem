@@ -1,0 +1,311 @@
+﻿@{
+    var controller = ViewContext.RouteData.Values["controller"]?.ToString();
+    string Active(string name) => string.Equals(controller, name, StringComparison.OrdinalIgnoreCase) ? "active" : "";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - HospitalSystem</title>
+    <script type="importmap"></script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/HospitalSystem.styles.css" asp-append-version="true" />
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+<body>
+    <div class="app-shell">
+
+
+        <!-- Sidebar: fixed on large screens, slides in on small ones -->
+        <aside class="sidebar offcanvas-lg offcanvas-start" tabindex="-1" id="sidebar" aria-label="Main navigation">
+            <div class="sidebar-head">
+                <a class="sidebar-brand" asp-controller="Home" asp-action="Index">HospitalSystem</a>
+                <button type="button" class="btn-close btn-close-white d-lg-none"
+                        data-bs-dismiss="offcanvas" data-bs-target="#sidebar" aria-label="Close menu"></button>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a class="side-link @Active("Home")" asp-controller="Home" asp-action="Index">Dashboard</a>
+
+                <div class="side-group">Clinical</div>
+                <a class="side-link @Active("Patients")" asp-controller="Patients" asp-action="Index">Patients</a>
+                <a class="side-link @Active("Doctors")" asp-controller="Doctors" asp-action="Index">Doctors</a>
+                <a class="side-link @Active("Appointments")" asp-controller="Appointments" asp-action="Index">Appointments</a>
+
+                <div class="side-group">Pharmacy and lab</div>
+                <a class="side-link @Active("Prescriptions")" asp-controller="Prescriptions" asp-action="Index">Prescriptions</a>
+                <a class="side-link @Active("Medicines")" asp-controller="Medicines" asp-action="Index">Medicines</a>
+                <a class="side-link @Active("LabOrders")" asp-controller="LabOrders" asp-action="Index">Lab Orders</a>
+
+                <div class="side-group">Administration</div>
+                <a class="side-link @Active("Departments")" asp-controller="Departments" asp-action="Index">Departments</a>
+                <a class="side-link @Active("Beds")" asp-controller="Beds" asp-action="Available">Beds</a>
+                <a class="side-link @Active("Billing")" asp-controller="Billing" asp-action="Index">Billing</a>
+            </nav>
+        </aside>
+
+        <div class="content-area">
+            <!-- Top bar: only shows the menu button on small screens -->
+            <header class="topbar">
+                <button class="btn btn-outline-secondary d-lg-none" type="button"
+                        data-bs-toggle="offcanvas" data-bs-target="#sidebar"
+                        aria-controls="sidebar" aria-label="Open menu">
+                    Menu
+                </button>
+                <span class="topbar-title d-lg-none">HospitalSystem</span>
+            </header>
+
+            <main role="main" class="page">
+                @if (TempData["Success"] != null)
+                {
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        @TempData["Success"]
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                }
+                @if (TempData["Error"] != null)
+                {
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        @TempData["Error"]
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                }
+
+                <div class="page-head">
+                    <h1 class="page-title">@ViewData["Title"]</h1>
+                    @if (ViewData["Subtitle"] != null)
+                    {
+                        <p class="page-subtitle">@ViewData["Subtitle"]</p>
+                    }
+                </div>
+
+                @RenderBody()
+            </main>
+
+            <footer class="page-footer">
+                &copy; 2026 - HospitalSystem
+            </footer>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
+
+
+<style>
+/* ===== Theme ===== */
+:root {
+    --hs-ink: #0F172A;
+    --hs-muted: #475569;
+    --hs-ground: #F6F8FA;
+    --hs-line: #E2E8F0;
+    --hs-teal: #0F766E;
+    --hs-teal-dark: #0B5D57;
+    --hs-sidebar-w: 240px;
+
+    --bs-primary: #0F766E;
+    --bs-primary-rgb: 15, 118, 110;
+    --bs-link-color: #0F766E;
+    --bs-link-hover-color: #0B5D57;
+}
+
+html { font-size: 15px; }
+
+body {
+    margin: 0;
+    background: var(--hs-ground);
+    color: var(--hs-ink);
+    font-family: Inter, system-ui, "Segoe UI", Arial, sans-serif;
+}
+
+/* ===== Shell ===== */
+.app-shell {
+    display: flex;
+    min-height: 100vh;
+}
+
+.content-area {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ===== Sidebar ===== */
+.sidebar {
+    --bs-offcanvas-width: 260px;
+    --bs-offcanvas-bg: var(--hs-ink);
+    --bs-offcanvas-color: #CBD5E1;
+    background: var(--hs-ink);
+    color: #CBD5E1;
+}
+
+@@media (min-width: 992px) {
+    .sidebar {
+        flex: none;
+        width: var(--hs-sidebar-w) !important;
+        height: 100vh !important;
+        position: sticky !important;
+        top: 0;
+        overflow-y: auto;
+        background-color: var(--hs-ink) !important;
+    }
+}
+
+.sidebar-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 24px 16px;
+}
+
+.sidebar-brand {
+    color: #FFFFFF;
+    font-size: 1.35rem;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 0 12px 24px;
+}
+
+.side-group {
+    margin: 18px 12px 6px;
+    font-size: 0.8rem;
+    color: #94A3B8;
+}
+
+.side-link {
+    display: block;
+    padding: 11px 14px;
+    border-radius: 8px;
+    color: #CBD5E1;
+    text-decoration: none;
+}
+
+.side-link:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: #FFFFFF;
+}
+
+.side-link.active {
+    background: var(--hs-teal);
+    color: #FFFFFF;
+    font-weight: 600;
+}
+
+.side-link:focus-visible,
+.sidebar-brand:focus-visible {
+    outline: 2px solid #FFFFFF;
+    outline-offset: 2px;
+}
+
+/* ===== Top bar (small screens) ===== */
+.topbar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: #FFFFFF;
+    border-bottom: 1px solid var(--hs-line);
+}
+
+@@media (min-width: 992px) {
+    .topbar { display: none; }
+}
+
+.topbar-title {
+    font-weight: 700;
+}
+
+/* ===== Page ===== */
+.page {
+    flex: 1;
+    padding: 28px 32px;
+}
+
+@@media (max-width: 575.98px) {
+    .page { padding: 20px 16px; }
+}
+
+.page-head { margin-bottom: 20px; }
+
+.page-title {
+    margin: 0;
+    font-size: 1.7rem;
+    font-weight: 700;
+}
+
+.page-subtitle {
+    margin: 4px 0 0;
+    color: var(--hs-muted);
+    font-size: 0.9rem;
+}
+
+.page-footer {
+    padding: 16px 32px;
+    color: var(--hs-muted);
+    font-size: 0.85rem;
+    border-top: 1px solid var(--hs-line);
+}
+
+/* ===== Bootstrap overrides ===== */
+.btn-primary {
+    --bs-btn-bg: var(--hs-teal);
+    --bs-btn-border-color: var(--hs-teal);
+    --bs-btn-hover-bg: var(--hs-teal-dark);
+    --bs-btn-hover-border-color: var(--hs-teal-dark);
+    --bs-btn-active-bg: var(--hs-teal-dark);
+    --bs-btn-active-border-color: var(--hs-teal-dark);
+    --bs-btn-disabled-bg: var(--hs-teal);
+    --bs-btn-disabled-border-color: var(--hs-teal);
+}
+
+.btn-outline-primary {
+    --bs-btn-color: var(--hs-teal);
+    --bs-btn-border-color: var(--hs-teal);
+    --bs-btn-hover-bg: var(--hs-teal);
+    --bs-btn-hover-border-color: var(--hs-teal);
+    --bs-btn-active-bg: var(--hs-teal-dark);
+    --bs-btn-active-border-color: var(--hs-teal-dark);
+}
+
+.btn:focus-visible,
+.form-control:focus,
+.form-select:focus {
+    box-shadow: 0 0 0 0.2rem rgba(15, 118, 110, 0.3);
+    border-color: var(--hs-teal);
+}
+
+.card {
+    border: 1px solid var(--hs-line);
+    border-radius: 12px;
+}
+
+.table {
+    background: #FFFFFF;
+    border: 1px solid var(--hs-line);
+}
+
+.table thead th {
+    background: #F1F5F9;
+    color: var(--hs-muted);
+    font-weight: 600;
+    font-size: 0.85rem;
+    border-bottom: 1px solid var(--hs-line);
+}
+
+.table-responsive {
+    border-radius: 12px;
+}
+</style>

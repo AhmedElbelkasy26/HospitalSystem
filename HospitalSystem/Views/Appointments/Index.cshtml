@@ -1,0 +1,110 @@
+﻿@model IEnumerable<HospitalManagementSystem.Models.Appointment>
+
+@{
+    ViewData["Title"] = "Appointments";
+}
+
+<div class="container-fluid py-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold">Appointments</h2>
+            <p class="text-muted">Manage hospital appointments</p>
+        </div>
+
+        <a asp-action="Create" class="btn btn-primary">
+            + Add New Appointment
+        </a>
+    </div>
+
+    <div class="card shadow-sm border-0">
+        <div class="card-body">
+
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+
+                    <thead class="table-light">
+                        <tr>
+                            <th>Patient</th>
+                            <th>Department</th>
+                            <th>Doctor</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Notes</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @if (Model != null && Model.Any())
+                        {
+                            foreach (var appointment in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @(appointment.Patient?.name ?? "N/A")
+                                    </td>
+
+                                    <td>
+                                        @(appointment.Doctor?.Department?.name ?? "N/A")
+                                    </td>
+
+                                    <td>
+                                        @(appointment.Doctor?.name ?? "N/A")
+                                    </td>
+
+                                    <td>
+                                        @appointment.date.ToString("dd/MM/yyyy")
+                                    </td>
+
+                                    <td>
+                                        @appointment.time.ToString(@"hh\:mm")
+                                    </td>
+
+                                    <td>
+                                        @(string.IsNullOrWhiteSpace(appointment.note)
+                                            ? "No notes"
+                                            : appointment.note)
+                                    </td>
+
+                                    <td>
+                                        <div class="d-flex gap-2">
+                                            <a asp-action="Details"
+                                               asp-route-id="@appointment.id"
+                                               class="btn btn-sm btn-info text-white">
+                                                Details
+                                            </a>
+
+                                            <a asp-action="Edit"
+                                               asp-route-id="@appointment.id"
+                                               class="btn btn-sm btn-warning">
+                                                Edit
+                                            </a>
+
+                                            <a asp-action="Delete"
+                                               asp-route-id="@appointment.id"
+                                               class="btn btn-sm btn-danger">
+                                                Delete
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="7" class="text-center py-4">
+                                    No appointments found.
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+</div>

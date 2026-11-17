@@ -1,6 +1,6 @@
 ﻿using Ecommerce533.Reposetories;
-using HospitalManagementSystem.Data;
-using HospitalManagementSystem.Models;
+using HospitalSystem.Data;
+using HospitalSystem.Models;
 
 using Microsoft.EntityFrameworkCore;
 
@@ -12,13 +12,14 @@ namespace HospitalSystem.Reposetories
 
         public UnitOfWork(IRepository<Specialization> specializations, IRepository<Department> departments,
             IRepository<Doctor> doctors, IRepository<Patient> patients,
-            IRepository<Appointment> appointments , ApplicationDbContext dbContext)
+            IRepository<Appointment> appointments, IRepository<Prescription> prescriptions, ApplicationDbContext dbContext)
         {
             Specializations = specializations;
             Departments = departments;
             Doctors = doctors;
             Patients = patients;
             Appointments = appointments;
+            Prescriptions = prescriptions;
             _context = dbContext;
         }
 
@@ -31,6 +32,8 @@ namespace HospitalSystem.Reposetories
         public IRepository<Patient> Patients { get; }
 
         public IRepository<Appointment> Appointments { get; }
+
+        public IRepository<Prescription> Prescriptions { get; }
 
         public async Task<int> CommitAsync()
         {
