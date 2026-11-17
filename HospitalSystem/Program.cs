@@ -23,4 +23,25 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Doctors}/{action=Create}/{id?}");
 
-app.Run();
+            // 2. إضافة الخدمات الأساسية
+            builder.Services.AddControllers();
+            builder.Services.AddControllersWithViews();
+            builder.Services.AddEndpointsApiExplorer();
+
+            var app = builder.Build();
+
+            // إعدادات الـ Pipeline
+            app.UseHttpsRedirection();
+            app.UseAuthorization();
+            app.MapControllers();
+
+
+            app.MapStaticAssets();
+            app.MapControllerRoute(
+                name: "default",
+                pattern: "{controller=Home}/{action=Index}/{id?}")
+                .WithStaticAssets();
+            app.Run();
+        }
+    }
+}
