@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Numerics;
 
-namespace HospitalManagementSystem.Models
+namespace HospitalSystem.Models
 {
     public class Department
     {
