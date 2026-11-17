@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace HospitalManagementSystem.Models
+namespace HospitalSystem.Models
 {
     public class Appointment
     {
