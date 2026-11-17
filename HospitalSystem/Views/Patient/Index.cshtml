@@ -1,0 +1,110 @@
+﻿@model IEnumerable<HospitalManagementSystem.Models.Patient>
+
+@{
+    ViewData["Title"] = "Patients";
+}
+
+<div class="container-fluid py-4" style="background-color: #f8f9fa; min-height: 100vh;">
+    <!-- Page Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold text-dark mb-1">Patients</h2>
+            <p class="text-muted mb-0" style="font-size: 14px;">PatientsController / Index</p>
+        </div>
+        <a asp-action="Create" class="btn text-white px-4 py-2 shadow-sm" style="background-color: #0d8366; border-radius: 6px; font-weight: 500;">
+            + New Patient
+        </a>
+    </div>
+
+    <!-- Search Bar Section -->
+    <div class="card border-0 shadow-sm mb-4 p-3" style="border-radius: 8px;">
+        <form asp-action="Index" method="get" class="row g-3 align-items-center">
+            <div class="col-12">
+                <div class="input-group">
+                    <span class="input-group-text bg-white border-end-0 text-muted" style="border-radius: 6px 0 0 6px;">
+                        <i class="bi bi-search"></i>
+                    </span>
+                    <input type="text" name="searchString" value="@ViewData["CurrentFilter"]" class="form-control border-start-0 ps-0" placeholder="Search by name or phone" style="box-shadow: none; border-radius: 0 6px 6px 0;" />
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Patients Table Card -->
+    <div class="card border-0 shadow-sm mb-4" style="border-radius: 8px; overflow: hidden;">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light text-secondary" style="font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px;">
+                    <tr>
+                        <th class="py-3 px-4">ID</th>
+                        <th class="py-3">Name</th>
+                        <th class="py-3">Age</th>
+                        <th class="py-3">Phone</th>
+                        <th class="py-3">Insurance</th>
+                        <th class="py-3 text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Any())
+                    {
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="px-4 fw-semibold text-secondary">@item.id</td>
+                                <td class="fw-bold text-dark">@item.name</td>
+                                <td class="text-muted">@item.age</td>
+                                <td class="text-muted">@item.phone</td>
+                                <td>
+                                    <span class="badge bg-light text-dark border px-2 py-1" style="font-weight: 500;">
+                                        @(string.IsNullOrEmpty(item.insurance) ? "None" : item.insurance)
+                                    </span>
+                                </td>
+                                <td class="text-center">
+                                    <div class="d-flex justify-content-center gap-2" style="font-size: 14px;">
+                                      
+                                        <span class="text-muted">·</span>
+                                        <a asp-action="Edit" asp-route-id="@item.id" class="text-decoration-none text-primary" style="font-weight: 500;">Edit</a>
+                                        <span class="text-muted">·</span>
+                                        <a asp-action="Delete" asp-route-id="@item.id" class="text-decoration-none text-danger" style="font-weight: 500;">Delete</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="6" class="text-center py-4 text-muted">No patients found.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Pagination Section -->
+    @if (ViewBag.TotalPages > 1)
+    {
+        <nav aria-label="Page navigation" class="d-flex justify-content-center">
+            <ul class="pagination shadow-sm">
+                <!-- Previous Button -->
+                <li class="page-item @(ViewBag.CurrentPage == 1 ? "disabled" : "")">
+                    <a class="page-link" asp-action="Index" asp-route-page="@(ViewBag.CurrentPage - 1)" asp-route-searchString="@ViewData["CurrentFilter"]">Previous</a>
+                </li>
+
+                <!-- Page Numbers -->
+                @for (int i = 1; i <= ViewBag.TotalPages; i++)
+                {
+                    <li class="page-item @(ViewBag.CurrentPage == i ? "active" : "")">
+                        <a class="page-link @(ViewBag.CurrentPage == i ? "text-white" : "text-dark")" style="@(ViewBag.CurrentPage == i ? "background-color: #0d8366; border-color: #0d8366;" : "")" asp-action="Index" asp-route-page="@i" asp-route-searchString="@ViewData["CurrentFilter"]">@i</a>
+                    </li>
+                }
+
+                <!-- Next Button -->
+                <li class="page-item @(ViewBag.CurrentPage == ViewBag.TotalPages ? "disabled" : "")">
+                    <a class="page-link" asp-action="Index" asp-route-page="@(ViewBag.CurrentPage + 1)" asp-route-searchString="@ViewData["CurrentFilter"]">Next</a>
+                </li>
+            </ul>
+        </nav>
+    }
+</div>

@@ -52,7 +52,7 @@ namespace HospitalSystem.Migrations
 
                     b.HasIndex("patient_id");
 
-                    b.ToTable("Appointments");
+                    b.ToTable("Appointments", (string)null);
                 });
 
             modelBuilder.Entity("HospitalSystem.Models.Department", b =>
@@ -69,7 +69,7 @@ namespace HospitalSystem.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("Departments");
+                    b.ToTable("Departments", (string)null);
                 });
 
             modelBuilder.Entity("HospitalSystem.Models.Doctor", b =>
@@ -96,7 +96,7 @@ namespace HospitalSystem.Migrations
 
                     b.HasIndex("specialization_id");
 
-                    b.ToTable("Doctors");
+                    b.ToTable("Doctors", (string)null);
                 });
 
             modelBuilder.Entity("HospitalSystem.Models.Patient", b =>
@@ -124,7 +124,7 @@ namespace HospitalSystem.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("Patients");
+                    b.ToTable("Patients", (string)null);
                 });
 
             modelBuilder.Entity("HospitalSystem.Models.Prescription", b =>
@@ -167,7 +167,7 @@ namespace HospitalSystem.Migrations
 
                     b.HasIndex("patient_id");
 
-                    b.ToTable("Prescriptions");
+                    b.ToTable("Prescriptions", (string)null);
                 });
 
             modelBuilder.Entity("HospitalSystem.Models.Specialization", b =>
@@ -184,7 +184,7 @@ namespace HospitalSystem.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("Specializations");
+                    b.ToTable("Specializations", (string)null);
                 });
 
             modelBuilder.Entity("HospitalSystem.Models.Appointment", b =>

@@ -25,6 +25,8 @@ namespace HospitalSystem
 
 
             // 2. إضافة الخدمات الأساسية
+            builder.Services.AddControllersWithViews();
+
             builder.Services.AddControllers();
             builder.Services.AddControllersWithViews();
             builder.Services.AddEndpointsApiExplorer();
