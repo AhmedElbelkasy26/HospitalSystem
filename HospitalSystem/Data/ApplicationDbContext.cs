@@ -1,17 +1,15 @@
 ﻿using HospitalManagementSystem.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace HospitalSystem.Data
+namespace HospitalManagementSystem.Data
 {
     public class ApplicationDbContext : DbContext
     {
-
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-            : base(options)
+        public ApplicationDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }
 
-        // DbSets for Hospital System Entities
+        
         public DbSet<Department> Departments { get; set; }
         public DbSet<Specialization> Specializations { get; set; }
         public DbSet<Patient> Patients { get; set; }
