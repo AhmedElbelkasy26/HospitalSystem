@@ -1,0 +1,31 @@
+@{
+    var current = ViewContext.RouteData.Values["controller"]?.ToString();
+    string Active(string controller) => current == controller ? "active" : "";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"] | MedCare HMS</title>
+    <link rel="stylesheet" href="~/css/hms.css" asp-append-version="true">
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="brand">MedCare HMS</div>
+        <nav class="nav">
+            <a asp-controller="Home" asp-action="Index" class="@Active("Home")">Dashboard</a>
+            <a href="#">Patients</a>
+            <a href="#">Doctors</a>
+            <a href="#">Appointments</a>
+            <a href="#" class="@Active("Prescriptions")">Prescriptions</a>
+            <a href="#">Lab Orders</a>
+            <a href="#">Billing</a>
+        </nav>
+    </aside>
+
+    <main class="main">
+        @RenderBody()
+    </main>
+</body>
+</html>

@@ -1,8 +1,7 @@
-
-using Microsoft.EntityFrameworkCore;
-using HospitalManagementSystem.Data;
 using Ecommerce533.Reposetories;
+using HospitalSystem.Data;
 using HospitalSystem.Reposetories;
+using Microsoft.EntityFrameworkCore;
 
 namespace HospitalSystem
 {
@@ -24,24 +23,29 @@ namespace HospitalSystem
             // Unit Of Work
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-            // MVC
+
+            // 2. إضافة الخدمات الأساسية
+            builder.Services.AddControllers();
             builder.Services.AddControllersWithViews();
+            builder.Services.AddEndpointsApiExplorer();
 
             var app = builder.Build();
 
             // Middleware
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
-
             app.UseAuthorization();
-
-            // Default Route
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Appointments}/{action=Index}/{id?}");
+                pattern: "{controller=Home}/{action=Index}/{id?}");
 
+
+            app.MapStaticAssets();
+            app.MapControllerRoute(
+                name: "default",
+                pattern: "{controller=Home}/{action=Index}/{id?}")
+                .WithStaticAssets();
             app.Run();
         }
     }

@@ -1,5 +1,5 @@
 ﻿using Ecommerce533.Reposetories;
-using HospitalManagementSystem.Models;
+using HospitalSystem.Models;
 
 namespace HospitalSystem.Reposetories
 {
@@ -10,6 +10,7 @@ namespace HospitalSystem.Reposetories
         IRepository<Doctor> Doctors { get; }
         IRepository<Patient> Patients { get; }
         IRepository<Appointment> Appointments { get; }
+        IRepository<Prescription> Prescriptions { get; }
         Task<int> CommitAsync();
     }
 }
