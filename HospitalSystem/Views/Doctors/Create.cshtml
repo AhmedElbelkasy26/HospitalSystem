@@ -1,0 +1,58 @@
+﻿@model HospitalSystem.Models.Doctor
+
+@{
+    ViewData["Title"] = "Add New Doctor";
+}
+
+<div class="container mt-5">
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-4">
+            <h4 class="mb-4 text-secondary">Doctor Information</h4>
+
+            <form asp-action="Create" method="post">
+                <div class="row">
+                    <!-- اسم الطبيب -->
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="name" class="form-label text-muted">Doctor Name</label>
+                        <input asp-for="name" class="form-control" placeholder="Enter doctor name" />
+                        <span asp-validation-for="name" class="text-danger"></span>
+                    </div>
+
+                    <!-- القسم (Dropdown) -->
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="department_id" class="form-label text-muted">Department</label>
+                        <select asp-for="department_id" class="form-control" asp-items="ViewBag.Departments">
+                            <option value="">-- Select Department --</option>
+                        </select>
+                        <span asp-validation-for="department_id" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <!-- التخصص (Dropdown) -->
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="specialization_id" class="form-label text-muted">Specialization</label>
+                        <select asp-for="specialization_id" class="form-control" asp-items="ViewBag.Specializations">
+                            <option value="">-- Select Specialization --</option>
+                        </select>
+                        <span asp-validation-for="specialization_id" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <!-- الأزرار -->
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-success px-4" style="background-color: #20b2aa; border-color: #20b2aa;">Save</button>
+                    <a asp-action="Index" asp-controller="Home" class="btn btn-light px-4 ms-2 border">Cancel</a>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<!-- Validation Scripts -->
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace HospitalManagementSystem.Models
+namespace HospitalSystem.Models
 {
     public class Patient
     {

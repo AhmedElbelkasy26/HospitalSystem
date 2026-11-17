@@ -1,5 +1,5 @@
 ﻿using Ecommerce533.Reposetories;
-using HospitalManagementSystem.Models;
+using HospitalSystem.Models;
 
 namespace HospitalSystem.Reposetories
 {
