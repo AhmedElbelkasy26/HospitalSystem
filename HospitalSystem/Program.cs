@@ -21,15 +21,19 @@ namespace HospitalSystem
 
 
             // 2. إضافة الخدمات الأساسية
-            builder.Services.AddControllers();
+            builder.Services.AddControllersWithViews();
             builder.Services.AddEndpointsApiExplorer();
 
             var app = builder.Build();
 
             // إعدادات الـ Pipeline
             app.UseHttpsRedirection();
+            app.UseStaticFiles();
+            app.UseRouting();
             app.UseAuthorization();
-            app.MapControllers();
+            app.MapControllerRoute(
+                name: "default",
+                pattern: "{controller=Home}/{action=Index}/{id?}");
 
             app.Run();
         }

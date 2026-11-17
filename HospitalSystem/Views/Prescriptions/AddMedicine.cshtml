@@ -1,0 +1,36 @@
+@model AddMedicineVM
+@{
+    ViewData["Title"] = "Add Medicine";
+}
+
+<header class="page-header">
+    <h1>Add Medicine</h1>
+    <p class="subtitle">Prescription #@Model.PrescriptionId · @Model.PatientName</p>
+</header>
+
+<div class="form-card">
+    <form asp-action="AddMedicine" asp-route-id="@Model.PrescriptionId" method="post">
+        <div class="form-group">
+            <label asp-for="Medicine"></label>
+            <input asp-for="Medicine" placeholder="e.g. Amoxicillin 500mg" />
+            <span asp-validation-for="Medicine" class="field-error"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Dose"></label>
+            <input asp-for="Dose" placeholder="e.g. 1 tablet daily" />
+            <span asp-validation-for="Dose" class="field-error"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Duration"></label>
+            <input asp-for="Duration" placeholder="e.g. 10 days" />
+            <span asp-validation-for="Duration" class="field-error"></span>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn-primary">Save</button>
+            <a asp-action="Details" asp-route-id="@Model.PrescriptionId" class="btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
