@@ -1,3 +1,6 @@
+using Ecommerce533.Reposetories;
+using HospitalSystem.Reposetories;
+
 namespace HospitalSystem
 {
     public class Program
@@ -9,6 +12,11 @@ namespace HospitalSystem
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
+     
+
+            builder.Services.AddScoped(typeof(IRepository<>), typeof(IRepository<>));
+
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
