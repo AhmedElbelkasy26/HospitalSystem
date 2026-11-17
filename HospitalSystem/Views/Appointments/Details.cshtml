@@ -1,0 +1,70 @@
+﻿@model HospitalManagementSystem.Models.Appointment
+
+@{
+    ViewData["Title"] = "Appointment Details";
+}
+
+<div class="container py-4">
+
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-4">
+
+            <h2 class="fw-bold mb-4">Appointment Details</h2>
+
+            <dl class="row">
+
+                <dt class="col-sm-3">Appointment ID</dt>
+                <dd class="col-sm-9">@Model.id</dd>
+
+                <dt class="col-sm-3">Patient</dt>
+                <dd class="col-sm-9">
+                    @(Model.Patient?.name ?? "N/A")
+                </dd>
+
+                <dt class="col-sm-3">Department</dt>
+                <dd class="col-sm-9">
+                    @(Model.Doctor?.Department?.name ?? "N/A")
+                </dd>
+
+                <dt class="col-sm-3">Doctor</dt>
+                <dd class="col-sm-9">
+                    @(Model.Doctor?.name ?? "N/A")
+                </dd>
+
+                <dt class="col-sm-3">Date</dt>
+                <dd class="col-sm-9">
+                    @Model.date.ToString("dd/MM/yyyy")
+                </dd>
+
+                <dt class="col-sm-3">Time</dt>
+                <dd class="col-sm-9">
+                    @Model.time.ToString(@"hh\:mm")
+                </dd>
+
+                <dt class="col-sm-3">Notes</dt>
+                <dd class="col-sm-9">
+                    @(string.IsNullOrWhiteSpace(Model.note)
+                        ? "No notes"
+                        : Model.note)
+                </dd>
+
+            </dl>
+
+            <div class="d-flex gap-2 mt-3">
+
+                <a asp-action="Edit"
+                   asp-route-id="@Model.id"
+                   class="btn btn-warning">
+                    Edit
+                </a>
+
+                <a asp-action="Index" class="btn btn-secondary">
+                    Back to Appointments
+                </a>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>

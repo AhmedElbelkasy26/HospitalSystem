@@ -11,12 +11,16 @@ namespace HospitalSystem
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            // Database
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(
+                    builder.Configuration.GetConnectionString("DefaultConnection")));
 
+            // Repository Pattern
+            builder.Services.AddScoped(
+                typeof(IRepository<>), typeof(Repository<>));
 
-            builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-
+            // Unit Of Work
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 
@@ -27,7 +31,7 @@ namespace HospitalSystem
 
             var app = builder.Build();
 
-            // إعدادات الـ Pipeline
+            // Middleware
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();

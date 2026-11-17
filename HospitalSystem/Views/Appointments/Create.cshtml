@@ -1,0 +1,124 @@
+﻿@model HospitalManagementSystem.Models.Appointment
+
+@{
+    ViewData["Title"] = "Create Appointment";
+}
+
+<div class="container py-4">
+
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-4">
+
+            <h2 class="fw-bold mb-2">Book an Appointment</h2>
+            <p class="text-muted mb-4">
+                Fill in the information below to schedule a new appointment.
+            </p>
+
+            <form asp-action="Create" method="post">
+
+                <div asp-validation-summary="ModelOnly"
+                     class="text-danger mb-3"></div>
+
+                <div class="mb-3">
+                    <label class="form-label">Patient</label>
+
+                    <select asp-for="patient_id"
+                            asp-items="ViewBag.Patients"
+                            class="form-select">
+                        <option value="">Select Patient</option>
+                    </select>
+
+                    <span asp-validation-for="patient_id"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Department</label>
+
+                    <select name="departmentId"
+                            asp-items="ViewBag.Departments"
+                            class="form-select"
+                            required>
+                        <option value="">Select Department</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Doctor</label>
+
+                    <select asp-for="doctor_id"
+                            asp-items="ViewBag.Doctors"
+                            class="form-select">
+                        <option value="">Select Doctor</option>
+                    </select>
+
+                    <span asp-validation-for="doctor_id"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="date" class="form-label">
+                            Appointment Date
+                        </label>
+
+                        <input asp-for="date"
+                               type="date"
+                               asp-format="{0:yyyy-MM-dd}"
+                               class="form-control" />
+
+                        <span asp-validation-for="date"
+                              class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="time" class="form-label">
+                            Appointment Time
+                        </label>
+
+                        <input asp-for="time"
+                               type="time"
+                               asp-format="{0:hh\\:mm}"
+                               class="form-control" />
+
+                        <span asp-validation-for="time"
+                              class="text-danger"></span>
+                    </div>
+
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="note" class="form-label">
+                        Notes
+                    </label>
+
+                    <textarea asp-for="note"
+                              class="form-control"
+                              rows="4"
+                              placeholder="Enter appointment notes..."></textarea>
+
+                    <span asp-validation-for="note"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-primary">
+                        Save Appointment
+                    </button>
+
+                    <a asp-action="Index" class="btn btn-secondary">
+                        Cancel
+                    </a>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
