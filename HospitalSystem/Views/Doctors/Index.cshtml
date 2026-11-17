@@ -1,0 +1,48 @@
+﻿@model IEnumerable<HospitalSystem.Models.Doctor>
+
+@{
+    ViewData["Title"] = "Doctors List";
+}
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h3 class="text-secondary">Doctors List</h3>
+        <!-- زرار الإضافة -->
+        <a asp-action="Create" class="btn text-white px-4" style="background-color: #20b2aa;">+ Add New Doctor</a>
+    </div>
+
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-0">
+            <table class="table table-hover mb-0 text-center">
+                <thead class="table-light">
+                    <tr>
+                        <th>ID</th>
+                        <th>Doctor Name</th>
+                        <th>Department</th>
+                        <th>Specialization</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Any())
+                    {
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="align-middle">@item.id</td>
+                                <td class="align-middle">@item.name</td>
+                                <td class="align-middle">@item.Department?.name</td>
+                                <td class="align-middle">@item.Specialization?.name</td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="4" class="text-center py-4 text-muted">No doctors found. Click "Add New Doctor" to create one.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
