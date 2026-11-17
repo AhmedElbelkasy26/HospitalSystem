@@ -1,5 +1,5 @@
-﻿using HospitalManagementSystem.Data;
-using HospitalManagementSystem.Models;
+﻿
+using HospitalSystem.Data;
 using HospitalSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
