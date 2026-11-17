@@ -1,7 +1,7 @@
-using Microsoft.EntityFrameworkCore;
-using HospitalManagementSystem.Data; // تأكد إن ده نفس الـ Namespace بتاع مشروعك
 using Ecommerce533.Reposetories;
+using HospitalManagementSystem.Data; // تأكد إن ده نفس الـ Namespace بتاع مشروعك
 using HospitalSystem.Reposetories;
+using Microsoft.EntityFrameworkCore;
 
 namespace HospitalSystem
 {
@@ -21,8 +21,9 @@ namespace HospitalSystem
 
 
             // 2. إضافة الخدمات الأساسية
+            builder.Services.AddControllersWithViews();
+
             builder.Services.AddControllers();
-            builder.Services.AddEndpointsApiExplorer();
 
             var app = builder.Build();
 
@@ -31,6 +32,11 @@ namespace HospitalSystem
             app.UseAuthorization();
             app.MapControllers();
 
+            app.MapControllerRoute(
+             name: "default",
+            pattern: "{controller=Patient}/{action=Index}/{id?}");
+
+            app.UseStaticFiles();
             app.Run();
         }
     }

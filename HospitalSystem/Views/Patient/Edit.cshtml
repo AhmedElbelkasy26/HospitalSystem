@@ -1,0 +1,73 @@
+﻿@model HospitalManagementSystem.Models.Patient
+
+@{
+    ViewData["Title"] = "Edit Patient";
+}
+
+<div class="container-fluid py-4" style="background-color: #f8f9fa; min-height: 100vh;">
+    <!-- Page Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold text-dark mb-1">Edit Patient</h2>
+            <p class="text-muted mb-0" style="font-size: 14px;">PatientsController / Edit</p>
+        </div>
+        <a asp-action="Index" class="btn btn-outline-secondary px-4 py-2 shadow-sm" style="border-radius: 6px; font-weight: 500;">
+            ← Back to List
+        </a>
+    </div>
+
+    <!-- Form Card -->
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card border-0 shadow-sm p-4" style="border-radius: 8px;">
+                <form asp-action="Edit" method="post">
+                    <!-- Hidden field for ID to ensure it's passed back correctly -->
+                    <input type="hidden" asp-for="id" />
+
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                    <!-- Name -->
+                    <div class="mb-3">
+                        <label asp-for="name" class="form-label fw-semibold text-secondary">Full Name</label>
+                        <input asp-for="name" class="form-control" placeholder="Enter patient's full name" style="border-radius: 6px; padding: 10px;" />
+                        <span asp-validation-for="name" class="text-danger" style="font-size: 13px;"></span>
+                    </div>
+
+                    <!-- Age -->
+                    <div class="mb-3">
+                        <label asp-for="age" class="form-label fw-semibold text-secondary">Age</label>
+                        <input asp-for="age" type="number" class="form-control" placeholder="Enter age" style="border-radius: 6px; padding: 10px;" />
+                        <span asp-validation-for="age" class="text-danger" style="font-size: 13px;"></span>
+                    </div>
+
+                    <!-- Phone -->
+                    <div class="mb-3">
+                        <label asp-for="phone" class="form-label fw-semibold text-secondary">Phone Number</label>
+                        <input asp-for="phone" class="form-control" placeholder="Enter phone number" style="border-radius: 6px; padding: 10px;" />
+                        <span asp-validation-for="phone" class="text-danger" style="font-size: 13px;"></span>
+                    </div>
+
+                    <!-- Insurance -->
+                    <div class="mb-4">
+                        <label asp-for="insurance" class="form-label fw-semibold text-secondary">Insurance Company</label>
+                        <input asp-for="insurance" class="form-control" placeholder="Enter insurance (e.g., AXA, MedLife, or None)" style="border-radius: 6px; padding: 10px;" />
+                        <span asp-validation-for="insurance" class="text-danger" style="font-size: 13px;"></span>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="d-grid">
+                        <button type="submit" class="btn text-white py-2 shadow-sm" style="background-color: #0d8366; border-radius: 6px; font-weight: 500; font-size: 16px;">
+                            Update Changes
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
