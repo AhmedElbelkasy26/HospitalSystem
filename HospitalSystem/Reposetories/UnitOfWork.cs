@@ -1,6 +1,7 @@
 ﻿using Ecommerce533.Reposetories;
+using HospitalManagementSystem.Data;
 using HospitalManagementSystem.Models;
-using HospitalSystem.Data;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace HospitalSystem.Reposetories

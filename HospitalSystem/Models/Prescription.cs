@@ -17,7 +17,7 @@ namespace HospitalManagementSystem.Models
         // Foreign Keys (Exact names)
         public int doctor_id { get; set; }
         public int patient_id { get; set; }
-        public int appointment_id { get; set; }
+        
 
         // Navigation Properties
         [ForeignKey("doctor_id")]
@@ -26,7 +26,6 @@ namespace HospitalManagementSystem.Models
         [ForeignKey("patient_id")]
         public Patient Patient { get; set; }
 
-        [ForeignKey("appointment_id")]
-        public Appointment Appointment { get; set; }
+     
     }
 }
