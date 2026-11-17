@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using HospitalManagementSystem.Models;
+using HospitalSystem.Models;
 
-namespace HospitalManagementSystem.Data
+namespace HospitalSystem.Data
 {
     public class ApplicationDbContext : DbContext
     {
